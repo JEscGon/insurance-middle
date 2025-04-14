@@ -1,0 +1,10 @@
+server:
+  port: 8082
+
+rest:
+  client:
+    core:
+      users:
+        host: http://localhost:8081
+      policies:
+        host: http://localhost:8080

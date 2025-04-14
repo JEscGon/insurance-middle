@@ -1,5 +1,4 @@
 spring:
   application:
     name: insurance-middle
-server:
-  port: 8082
+
