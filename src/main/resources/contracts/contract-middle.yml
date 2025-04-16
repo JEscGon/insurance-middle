@@ -1,0 +1,1215 @@
+openapi: 3.0.0
+info:
+  title: INSURANCE - MIDDLEWARE/GATEWAY
+  description: GATEWAY
+  version: 1.0.0
+servers:
+  - url: https://localhost:8082
+tags:
+  - name: userMiddle
+    description: Operations about user
+  - name: userThirdMiddle
+    description: Operations about userThird
+  - name: vehicleMiddle
+    description: Operations about vehicle
+  - name: vehicleThirdMiddle
+    description: Operations about vehicleThird
+  - name: policyMiddle
+    description: Operations about policy
+  - name: partMiddle
+    description: Operations about part
+
+paths:
+  /policyTypes:
+    get:
+      tags:
+        - policyMiddle
+      summary: Obtener todos los tipos de pólizas
+      operationId: getAllPolicyTypes
+      responses:
+        '200':
+          description: Lista de tipos de pólizas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PolicyType'
+
+  /policyTypes/{id}:
+    get:
+      tags:
+        - policyMiddle
+      summary: Obtener un tipo de póliza por ID
+      operationId: getPolicyTypeById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Tipo de póliza encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyType'
+        '404':
+          description: Tipo de póliza no encontrado
+  /states:
+    get:
+      tags:
+        - states
+      summary: Obtener todos los estados
+      operationId: getAllStates
+      responses:
+        '200':
+          description: Lista de estados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/State'
+  /states/{id}:
+    get:
+      tags:
+        - states
+      summary: Obtener un estado por ID
+      operationId: getStateById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Estado encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/State'
+        '404':
+          description: Estado no encontrado
+  /policies:
+    post:
+      tags:
+        - policyMiddle
+      summary: Creación de una póliza
+      description: Crea una nueva póliza en el sistema
+      operationId: savePolicy
+      requestBody:
+        required: true
+        description: Póliza a crear
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy'
+      responses:
+        '201':
+          description: Póliza creada correctamente
+    get:
+      tags:
+        - policies
+      summary: Obtener todas las pólizas
+      operationId: getAllPolicies
+      responses:
+        '200':
+          description: Lista de pólizas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Policy'
+
+  /policies/{id}:
+    get:
+      tags:
+        - policyMiddle
+      summary: Obtener detalles de una póliza
+      operationId: getPolicyById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalles de la póliza
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+        '404':
+          description: Póliza no encontrada
+    put:
+      tags:
+        - policyMiddle
+      summary: Actualizar una póliza existente
+      operationId: updatePolicy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Datos actualizados de la póliza
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy'
+      responses:
+        '200':
+          description: Póliza actualizada correctamente
+        '404':
+          description: Póliza no encontrada
+    delete:
+      tags:
+        - policyMiddle
+      summary: Eliminar una póliza
+      operationId: deletePolicyById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Póliza eliminada correctamente
+
+  /policies/dni/{dni}:
+    get:
+      tags:
+        - policyMiddle
+      summary: Obtener póliza por DNI de usuario
+      operationId: getPolicyByDni
+      parameters:
+        - in: path
+          name: dni
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Póliza del usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+
+  /policies/vehicle/{matricula}:
+    get:
+      tags:
+        - policyMiddle
+      summary: Obtener póliza por matrícula del vehículo
+      operationId: getPolicyByMatricula
+      parameters:
+        - in: path
+          name: matricula
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: póliza del vehículo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+
+  /policies/user/{userId}:
+    get:
+      tags:
+        - policyMiddle
+      summary: Obtener póliza por ID de usuario
+      operationId: getPolicyByUserId
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Póliza del usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+        '404':
+          description: Póliza no encontrada
+
+
+  /parts:
+    post:
+      tags:
+        - parts
+      summary: Crear un parte de siniestro
+      operationId: savePart
+      requestBody:
+        required: true
+        description: Parte a crear
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Part'
+      responses:
+        '201':
+          description: Parte creado correctamente
+    get:
+      tags:
+        - parts
+      summary: Obtener todos los partes
+      operationId: getAllParts
+      responses:
+        '200':
+          description: Lista de partes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Part'
+  /parts/{id}:
+    get:
+      tags:
+        - parts
+      summary: Obtener un parte por ID
+      operationId: getPartById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Parte encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Part'
+        '404':
+          description: Parte no encontrado
+    put:
+      tags:
+        - parts
+      summary: Actualizar un parte de siniestro existente
+      operationId: updatePart
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        description: Datos actualizados del parte
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Part'
+      responses:
+        '200':
+          description: Parte actualizado correctamente
+        '404':
+          description: Parte no encontrado
+    delete:
+      tags:
+        - parts
+      summary: Eliminar un parte de siniestro
+      operationId: deletePartById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Parte eliminado correctamente
+        '404':
+          description: Parte no encontrado
+
+  /parts/policy/{policyId}:
+    get:
+      tags:
+        - parts
+      summary: Obtener partes por ID de póliza
+      operationId: getPartsByPolicyId
+      parameters:
+        - in: path
+          name: policyId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lista de partes asociados a la póliza
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Part'
+
+  /users:
+    post:
+      tags:
+        - users
+      summary: Creación de un usuario
+      description: Creación de un usuario en la base de datos
+      operationId: save
+      requestBody:
+        required: true
+        description: Usuario a crear
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Usuario creado
+    get:
+      tags:
+        - users
+      summary: Obtener todos los usuarios
+      operationId: findAllUsers
+      responses:
+        '200':
+          description: Lista de usuarios
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+  /users/{id}:
+    get:
+      tags:
+        - users
+      summary: Obtener los detalles de un usuario
+      operationId: findById
+      parameters:
+        - in: path
+          name: id
+          description: 'The id that needs to be fetched.'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: operation OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid id supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    delete:
+      tags:
+        - users
+      summary: Eliminar un usuario
+      operationId: deleteUserById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Usuario eliminado
+    put:
+      tags:
+        - users
+      summary: Actualizar un usuario existente
+      description: Actualiza la información de un usuario identificado por su ID
+      operationId: updateUser
+      parameters:
+        - in: path
+          name: id
+          description: 'ID del usuario a actualizar'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        description: Datos actualizados del usuario
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Usuario actualizado correctamente
+        '400':
+          description: Datos de entrada inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
+  /users/dni/{dni}:
+    get:
+      tags:
+        - users
+      summary: Obtener un usuario por DNI
+      operationId: getUserByDni
+      parameters:
+        - in: path
+          name: dni
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalles del usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /users/email/{email}:
+    get:
+      tags:
+        - users
+      summary: Obtener un usuario por email
+      operationId: getUserByEmail
+      parameters:
+        - in: path
+          name: email
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalles del usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /vehicles:
+    get:
+      tags:
+        - vehicles
+      summary: Obtener todos los vehículos
+      description: Devuelve una lista con todos los vehículos registrados
+      operationId: getAllVehicles
+      responses:
+        '200':
+          description: Lista de vehículos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vehicle'
+    post:
+      tags:
+        - vehicles
+      summary: Añade un nuevo vehículo
+      description: Registra un nuevo vehículo en el sistema
+      operationId: saveVehicle
+      requestBody:
+        required: true
+        description: Vehículo a añadir
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle'
+      responses:
+        '201':
+          description: Vehículo creado correctamente
+
+  /vehicles/{id}:
+    get:
+      tags:
+        - vehicles
+      summary: Encuentra un vehículo por ID
+      description: Devuelve un único vehículo
+      operationId: getVehicleById
+      parameters:
+        - in: path
+          name: id
+          description: 'The id that needs to be fetched.'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Operación OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+        '404':
+          description: Vehículo no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
+    put:
+      tags:
+        - vehicles
+      summary: Actualiza un vehículo existente
+      description: Actualiza un vehículo identificado por su id con los nuevos datos.
+      operationId: updateVehicle
+      parameters:
+        - in: path
+          name: id
+          description: 'ID del vehículo a actualizar'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Nuevos datos del vehiculo.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle'
+      responses:
+        '200':
+          description: Vehículo actualizado correctamente
+        '400':
+          description: Datos de entrada inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Vehículo no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    delete:
+      tags:
+        - vehicles
+      summary: Elimina un vehículo
+      description: Elimina un vehículo del sistema
+      operationId: deleteVehicleById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Vehículo eliminado correctamente
+
+  /vehicles/matricula/{matricula}:
+    get:
+      tags:
+        - vehicles
+      summary: Encuentra un vehículo por matrícula
+      description: Devuelve un vehículo buscando por su matrícula
+      operationId: findByMatricula
+      parameters:
+        - name: matricula
+          in: path
+          description: Matrícula del vehículo
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+        '404':
+          description: Vehículo no encontrado
+
+  /vehicles/user/{idUser}:
+    get:
+      tags:
+        - vehicles
+      summary: Encuentra vehículos por ID de usuario
+      description: Devuelve una lista de vehículos que pertenecen a un usuario específico
+      operationId: getVehiclesByUserId
+      parameters:
+        - name: idUser
+          in: path
+          description: ID del usuario
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vehicle'
+
+  /third_users:
+    post:
+      tags:
+        - third_users
+      summary: Creación de un tercer usuario
+      description: Creación de un tercer usuario en la base de datos
+      operationId: saveThirdUser
+      requestBody:
+        required: true
+        description: Tercer usuario a crear
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserThird'
+      responses:
+        '201':
+          description: Tercer usuario creado
+    get:
+      tags:
+        - third_users
+      summary: Obtener todos los terceros usuarios
+      operationId: findAllThirdUsers
+      responses:
+        '200':
+          description: Lista de terceros usuarios
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserThird'
+
+  /third_users/{id}:
+    get:
+      tags:
+        - third_users
+      summary: Obtener los detalles de un tercer usuario
+      operationId: findThirdUserById
+      parameters:
+        - in: path
+          name: id
+          description: 'El id que necesita ser buscado.'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Operación OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserThird'
+        '400':
+          description: Id inválido suministrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Tercer usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    delete:
+      tags:
+        - third_users
+      summary: Eliminar un tercer usuario
+      operationId: deleteThirdUserById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Tercer usuario eliminado
+    put:
+      tags:
+        - third_users
+      summary: Actualizar un tercer usuario existente
+      description: Actualiza la información de un tercer usuario identificado por su ID
+      operationId: updateThirdUser
+      parameters:
+        - in: path
+          name: id
+          description: 'ID del tercer usuario a actualizar'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        description: Datos actualizados del tercer usuario
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserThird'
+      responses:
+        '200':
+          description: Tercer usuario actualizado correctamente
+        '400':
+          description: Datos de entrada inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Tercer usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
+  /third_vehicles:
+    post:
+      tags:
+        - third_vehicles
+      summary: Añade un nuevo tercer vehículo
+      description: Registra un nuevo tercer vehículo en el sistema
+      operationId: saveThirdVehicle
+      requestBody:
+        required: true
+        description: Tercer vehículo a añadir
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleThird'
+      responses:
+        '201':
+          description: Tercer vehículo creado correctamente
+    get:
+      tags:
+        - third_vehicles
+      summary: Obtener todos los terceros vehículos
+      description: Devuelve una lista con todos los terceros vehículos registrados
+      operationId: getAllThirdVehicles
+      responses:
+        '200':
+          description: Lista de terceros vehículos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VehicleThird'
+
+  /third_vehicles/{id}:
+    get:
+      tags:
+        - third_vehicles
+      summary: Encuentra un tercer vehículo por ID
+      description: Devuelve un único tercer vehículo
+      operationId: getThirdVehicleById
+      parameters:
+        - in: path
+          name: id
+          description: 'El id que necesita ser buscado.'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Operación OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleThird'
+        '404':
+          description: Tercer vehículo no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    put:
+      tags:
+        - third_vehicles
+      summary: Actualiza un tercer vehículo existente
+      description: Actualiza un tercer vehículo identificado por su id con los nuevos datos
+      operationId: updateThirdVehicle
+      parameters:
+        - in: path
+          name: id
+          description: 'ID del tercer vehículo a actualizar'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Datos actualizados del tercer vehículo
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleThird'
+      responses:
+        '200':
+          description: Tercer vehículo actualizado correctamente
+        '400':
+          description: Datos de entrada inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Tercer vehículo no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    delete:
+      tags:
+        - third_vehicles
+      summary: Elimina un tercer vehículo
+      description: Elimina un tercer vehículo del sistema
+      operationId: deleteThirdVehicleById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Tercer vehículo eliminado correctamente
+
+  /third_vehicles/matricula/{matricula}:
+    get:
+      tags:
+        - third_vehicles
+      summary: Encuentra un tercer vehículo por matrícula
+      description: Devuelve un tercer vehículo buscando por su matrícula
+      operationId: findByMatriculaThird
+      parameters:
+        - name: matricula
+          in: path
+          description: Matrícula del tercer vehículo
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleThird'
+        '404':
+          description: Tercer vehículo no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
+components:
+  schemas:
+    PolicyType:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+      required:
+        - name
+        - description
+
+    State:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+      required:
+        - name
+        - description
+
+    Policy:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        vehicleId:
+          type: integer
+        beneficiaryId:
+          type: integer
+        iban:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        policyTypeId:
+          type: integer
+        active:
+          type: boolean
+        premiumAmount:
+          type: number
+          format: double
+        registrationDate:
+          type: string
+          format: date
+          example: "2023-05-15"
+        lastUpdateDate:
+          type: string
+          format: date
+          example: "2024-02-20"
+      required:
+        - userId
+        - vehicleId
+        - beneficiaryId
+        - iban
+        - startDate
+        - endDate
+        - policyTypeId
+        - premiumAmount
+        - registrationDate
+        - lastUpdateDate
+
+    Part:
+      type: object
+      properties:
+        id:
+          type: integer
+        policyId:
+          type: integer
+        thirdPartyId:
+          type: integer
+        thirdPartyVehicleId:
+          type: integer
+        placeEvent:
+          type: string
+        description:
+          type: string
+        accidentDate:
+          type: string
+          format: date-time
+        dateOfRegistration:
+          type: string
+          format: date-time
+        dateOfLastUpdate:
+          type: string
+          format: date-time
+        stateId:
+          type: integer
+      required:
+        - policyId
+        - description
+        - accidentDate
+        - dateOfRegistration
+        - stateId
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        surname:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        dni:
+          type: string
+        password:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        address:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        dateOfRegistration:
+          type: string
+          format: date
+        dateOfLastUpdate:
+          type: string
+          format: date
+        vehicles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vehicle'
+
+    Vehicle:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        userId:
+          type: integer
+          example: 1
+        matricula:
+          type: string
+          example: "1234ABC"
+        km:
+          type: integer
+          example: 50000
+        color:
+          type: string
+          example: "Rojo"
+        marca:
+          type: string
+          example: "Toyota"
+        fechaFabricacion:
+          type: string
+          format: date
+          example: "2020-01-01"
+        dateOfRegistration:
+          type: string
+          format: date
+          example: "2023-05-15"
+        dateOfLastUpdate:
+          type: string
+          format: date
+          example: "2024-02-20"
+      required:
+        - idUser
+        - matricula
+        - km
+        - marca
+        - fechaFabricacion
+
+    UserThird:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        surname:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        dni:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        address:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        dateOfRegistration:
+          type: string
+          format: date
+        dateOfLastUpdate:
+          type: string
+          format: date
+        vehicles:
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleThird'
+
+    VehicleThird:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        userThirdId:
+          type: integer
+        matricula:
+          type: string
+          example: "1234ABC"
+        km:
+          type: integer
+          example: 50000
+        marca:
+          type: string
+          example: "Toyota"
+        aseguradora:
+          type: string
+          example: "Mapfre"
+        color:
+          type: string
+          example: "Rojo"
+        fechaFabricacion:
+          type: string
+          format: date
+          example: "2020-01-01"
+        dateOfRegistration:
+          type: string
+          format: date
+          example: "2023-05-15"
+        dateOfLastUpdate:
+          type: string
+          format: date
+          example: "2024-02-20"
+      required:
+        - idUser
+        - matricula
+        - km
+        - marca
+        - fechaFabricacion
+
+    ErrorMessage:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+        message:
+          type: string
+        description:
+          type: string
