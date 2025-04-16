@@ -9,13 +9,13 @@ servers:
 
 tags:
   - name: users
-    description: Operations about users
+    description: Operations sobre users
   - name: vehicles
-    description: Operations about vehicles
+    description: Operations sobre vehicles
   - name: third_users
-    description: Operations about third_users
+    description: Operations sobre third_users
   - name: third_vehicles
-    description: Operations about third_vehicles
+    description: Operations sobre third_vehicles
 
 paths:
   /users:
