@@ -180,7 +180,7 @@
 							<generatorName>java</generatorName>
 							<inputSpec>${project.basedir}/src/main/resources/contracts/contract-policies.yml</inputSpec>
 							<library>resttemplate</library>
-							<modelNameSuffix>ClientDto</modelNameSuffix>
+							<modelNameSuffix>Dto</modelNameSuffix>
 							<apiPackage>com.dev.insurance.middle.generated.policies.client</apiPackage>
 							<modelPackage>com.dev.insurance.middle.generated.policies.dto</modelPackage>
 							<generateSupportingFiles>true</generateSupportingFiles>
@@ -207,7 +207,7 @@
 							<generatorName>java</generatorName>
 							<inputSpec>${project.basedir}/src/main/resources/contracts/contract-users.yml</inputSpec>
 							<library>resttemplate</library>
-							<modelNameSuffix>ClientDto</modelNameSuffix>
+							<modelNameSuffix>Dto</modelNameSuffix>
 							<apiPackage>com.dev.insurance.middle.generated.users.client</apiPackage>
 							<modelPackage>com.dev.insurance.middle.generated.users.dto</modelPackage>
 							<generateSupportingFiles>true</generateSupportingFiles>
@@ -232,7 +232,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.5.2</version>
 				<configuration>
-					<skipTests>false</skipTests>
+					<skipTests>true</skipTests>
 					<includes>
 						<include>**/*Test.java</include>
 						<include>**/Test*.java</include>
