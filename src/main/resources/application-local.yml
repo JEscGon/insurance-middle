@@ -5,18 +5,6 @@ rest:
   client:
     core:
       users:
-        host: http://localhost:8080
-      vehicles:
-        host: http://localhost:8080
-      third-vehicles:
-        host: http://localhost:8080
-      third-users:
-        host: http://localhost:8080
+        host: http://localhost:8081
       policies:
-        host: http://localhost:8081
-      parts:
-        host: http://localhost:8081
-      policy-type:
-        host: http://localhost:8081
-      state:
-        host: http://localhost:8081
+        host: http://localhost:8080
