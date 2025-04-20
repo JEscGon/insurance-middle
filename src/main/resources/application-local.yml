@@ -5,6 +5,6 @@ rest:
   client:
     core:
       users:
-        host: http://localhost:8081
-      policies:
         host: http://localhost:8080
+      policies:
+        host: http://localhost:8081
