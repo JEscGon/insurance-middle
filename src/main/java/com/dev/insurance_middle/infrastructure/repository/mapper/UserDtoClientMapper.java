@@ -5,6 +5,7 @@ import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface UserDtoClientMapper {
+
     User fromDtoToDomain(UserClientDto userClientDto);
     UserClientDto fromDomainToDto(User user);
 

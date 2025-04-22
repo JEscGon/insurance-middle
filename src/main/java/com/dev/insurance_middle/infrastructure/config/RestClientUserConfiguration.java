@@ -1,6 +1,5 @@
 package com.dev.insurance_middle.infrastructure.config;
 
-
 import com.dev.generated.users.ApiClient;
 import com.dev.generated.users.client.UsersApi;
 import org.springframework.beans.factory.annotation.*;
@@ -13,10 +12,8 @@ public class RestClientUserConfiguration {
     @Value("${rest.client.core.users.host}")
     private String baseUsersHost;
 
-
     @Bean("usersApiClient")
-    public ApiClient usersApiClient(RestTemplate restTemplate
-    ) {
+    public ApiClient usersApiClient(RestTemplate restTemplate) {
         var userApiClient = new ApiClient(restTemplate);
         userApiClient.setBasePath(baseUsersHost);
         return userApiClient;
