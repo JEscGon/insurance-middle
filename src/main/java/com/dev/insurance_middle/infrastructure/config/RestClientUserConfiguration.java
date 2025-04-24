@@ -20,7 +20,7 @@ public class RestClientUserConfiguration {
     }
 
     @Bean("userApi")
-    public UsersApi userApi(ApiClient apiClient) {
+    public UsersApi userApi(@Qualifier("usersApiClient") ApiClient apiClient) {
         UsersApi userApi = new UsersApi();
         userApi.setApiClient(apiClient);
         return userApi;

@@ -5,6 +5,7 @@ import com.dev.insurance_middle.application.domain.UserThird;
 import com.dev.insurance_middle.application.repository.UserThirdRepository;
 import com.dev.insurance_middle.infrastructure.repository.mapper.UserThirdDtoClientMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
