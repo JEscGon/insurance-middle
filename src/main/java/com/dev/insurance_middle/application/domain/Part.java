@@ -1,26 +1,32 @@
 package com.dev.insurance_middle.application.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
-@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class Part {
 
-    private Long id;
+  private Integer id;
 
-    private Long policyId;
-    private Long thirdPartyId;
-    private Long thirdPartyVehicleId;
-    private Long stateId;
+  private Integer policyId;
 
-    private String placeEvent;
-    private String description;
-    private LocalDateTime accidentDate;
-    private LocalDateTime dateOfRegistration;
-    private LocalDateTime dateOfLastUpdate;
+  private ThirdPartyInfo thirdPartyInfo;
+
+  private String placeEvent;
+
+  private String description;
+
+  private OffsetDateTime accidentDate;
+
+  private OffsetDateTime dateOfRegistration;
+
+  private OffsetDateTime dateOfLastUpdate;
+
+  private Integer stateId;
+
 }

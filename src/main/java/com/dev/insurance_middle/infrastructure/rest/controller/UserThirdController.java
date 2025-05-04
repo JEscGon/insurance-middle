@@ -1,7 +1,7 @@
 package com.dev.insurance_middle.infrastructure.rest.controller;
 
 import com.dev.generated.middle.controller.ThirdUsersApi;
-import com.dev.generated.middle.dto.UserThirdControllerDto;
+import com.dev.generated.middle.dto.ThirdPartyUserControllerDto;
 import com.dev.insurance_middle.application.service.UserThirdService;
 import com.dev.insurance_middle.infrastructure.rest.mapper.UserThirdDtoControllerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,28 +24,16 @@ public class UserThirdController implements ThirdUsersApi {
         return ResponseEntity.noContent().build();
     }
 
-    @Override
-    public ResponseEntity<List<UserThirdControllerDto>> findAllThirdUsers() {
-        List<UserThirdControllerDto> userDtos = userThirdService.findAllThirdUsers().stream()
-                .map(userThirdDtoControllerMapper::fromDomainToDto)
-                .toList();
-        return ResponseEntity.ok(userDtos);
-    }
 
     @Override
-    public ResponseEntity<UserThirdControllerDto> findThirdUserById(Long userId) {
-        UserThirdControllerDto userDto = userThirdDtoControllerMapper.fromDomainToDto(userThirdService.findThirdUserById(userId));
+    public ResponseEntity<ThirdPartyUserControllerDto> findThirdUserById(Long userId) {
+        ThirdPartyUserControllerDto userDto = userThirdDtoControllerMapper.fromDomainToDto(userThirdService.findThirdUserById(userId));
         return ResponseEntity.ok(userDto);
     }
 
-    @Override
-    public ResponseEntity<Void> saveThirdUser(UserThirdControllerDto userDto) {
-        userThirdService.saveThirdUser(userThirdDtoControllerMapper.fromDtoToDomain(userDto));
-        return ResponseEntity.noContent().build();
-    }
 
     @Override
-    public ResponseEntity<Void> updateThirdUser(Long userId, UserThirdControllerDto userDto) {
+    public ResponseEntity<Void> updateThirdUser(Long userId, ThirdPartyUserControllerDto userDto) {
         userThirdService.updateThirdUser(userId, userThirdDtoControllerMapper.fromDtoToDomain(userDto));
         return ResponseEntity.noContent().build();
     }
