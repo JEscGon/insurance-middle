@@ -39,13 +39,10 @@ public class PartsService {
     }
 
     private void saveThirdUserInfo(ThirdPartyInfo thirdPartyUser) {
-
         userThirdRepository.saveThirdUser(thirdPartyUser.getThirdPartyUser());
+        vehicleThirdRepository.saveThirdVehicle(thirdPartyUser.getThirdPartyVehicle());
     }
 
-    private void saveThirdUVehicleInfo(List<ThirdPartyVehicle> thirdPartyVehicle) {
-        vehicleThirdRepository.saveThirdVehicle(thirdPartyVehicle);
-    }
 
     private void savePart(Part part) {
 
