@@ -1,7 +1,9 @@
 package com.dev.insurance_middle.infrastructure.repository;
 
 import com.dev.generated.users.client.ThirdVehiclesApi;
-import com.dev.insurance_middle.application.domain.VehicleThird;
+import com.dev.generated.users.dto.ThirdPartyVehiclesWrapperClientDto;
+
+import com.dev.insurance_middle.application.domain.ThirdPartyVehicle;
 import com.dev.insurance_middle.application.repository.VehicleThirdRepository;
 import com.dev.insurance_middle.infrastructure.repository.mapper.VehicleThirdDtoClientMapper;
 import lombok.RequiredArgsConstructor;
@@ -20,26 +22,40 @@ public class VehicleThirdRestClientImpl implements VehicleThirdRepository {
     public void deleteThirdVehicleById(Long id) {
         thirdVehiclesApi.deleteThirdVehicleById(id);
     }
-    @Override
-    public VehicleThird findByMatriculaThird(String matricula) {
+
+    public ThirdPartyVehicle findByMatriculaThird(String matricula) {
         return vehicleThirdDtoClientMapper.fromDtoToDomain(thirdVehiclesApi.findByMatriculaThird(matricula));
     }
+
     @Override
-    public List<VehicleThird> getAllThirdVehicles() {
-        return thirdVehiclesApi.getAllThirdVehicles().stream()
+    public List<ThirdPartyVehicle> getAllThirdVehicles() {
+        return thirdVehiclesApi.getAllThirdVehicles().getVehicles().stream()
                 .map(vehicleThirdDtoClientMapper::fromDtoToDomain)
                 .toList();
+
+
     }
     @Override
-    public VehicleThird getThirdVehicleById(Long id) {
+    public ThirdPartyVehicle getThirdVehicleById(Long id) {
         return vehicleThirdDtoClientMapper.fromDtoToDomain(thirdVehiclesApi.getThirdVehicleById(id));
     }
     @Override
-    public void saveThirdVehicle(VehicleThird vehicleThird) {
-        thirdVehiclesApi.saveThirdVehicle(vehicleThirdDtoClientMapper.fromDomainToDto(vehicleThird));
+    public void saveThirdVehicle(List<ThirdPartyVehicle> vehicleThird) {
+        var vehicles = vehicleThird.stream().map(vehicleThirdDtoClientMapper::fromDomainToDto).toList();
+        var wrapper = new ThirdPartyVehiclesWrapperClientDto();
+        wrapper.setVehicles(vehicles);
+        thirdVehiclesApi.saveThirdVehicle(wrapper);
     }
+
     @Override
-    public void updateThirdVehicle(Long id, VehicleThird vehicleThird) {
+    public void saveThirdVehicle(ThirdPartyVehicle vehicleThird) {
+        var vehiculo = vehicleThirdDtoClientMapper.fromDomainToDto(vehicleThird);
+        var wrapper = new ThirdPartyVehiclesWrapperClientDto();
+        thirdVehiclesApi.saveThirdVehicle(wrapper);
+    }
+
+    @Override
+    public void updateThirdVehicle(Long id, ThirdPartyVehicle vehicleThird) {
         thirdVehiclesApi.updateThirdVehicle(id, vehicleThirdDtoClientMapper.fromDomainToDto(vehicleThird));
     }
 

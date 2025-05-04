@@ -8,16 +8,12 @@ servers:
 tags:
   - name: userMiddle
     description: Operations about user
-  - name: userThirdMiddle
-    description: Operations about userThird
-  - name: vehicleMiddle
-    description: Operations about vehicle
-  - name: vehicleThirdMiddle
-    description: Operations about vehicleThird
-  - name: policyMiddle
-    description: Operations about policy
   - name: partMiddle
     description: Operations about part
+  - name: policyMiddle
+    description: Operations about policy
+  - name: states
+    description: Operations about states
 
 paths:
   /policyTypes:
@@ -112,7 +108,7 @@ paths:
           description: Póliza creada correctamente
     get:
       tags:
-        - policies
+        - policyMiddle
       summary: Obtener todas las pólizas
       operationId: getAllPolicies
       responses:
@@ -681,37 +677,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/Vehicle'
 
-  /third_users:
-    post:
-      tags:
-        - third_users
-      summary: Creación de un tercer usuario
-      description: Creación de un tercer usuario en la base de datos
-      operationId: saveThirdUser
-      requestBody:
-        required: true
-        description: Tercer usuario a crear
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserThird'
-      responses:
-        '201':
-          description: Tercer usuario creado
-    get:
-      tags:
-        - third_users
-      summary: Obtener todos los terceros usuarios
-      operationId: findAllThirdUsers
-      responses:
-        '200':
-          description: Lista de terceros usuarios
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/UserThird'
 
   /third_users/{id}:
     get:
@@ -733,7 +698,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserThird'
+                $ref: '#/components/schemas/ThirdPartyUser'
         '400':
           description: Id inválido suministrado
           content:
@@ -781,7 +746,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserThird'
+              $ref: '#/components/schemas/ThirdPartyUser'
       responses:
         '200':
           description: Tercer usuario actualizado correctamente
@@ -799,22 +764,6 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
 
   /third_vehicles:
-    post:
-      tags:
-        - third_vehicles
-      summary: Añade un nuevo tercer vehículo
-      description: Registra un nuevo tercer vehículo en el sistema
-      operationId: saveThirdVehicle
-      requestBody:
-        required: true
-        description: Tercer vehículo a añadir
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/VehicleThird'
-      responses:
-        '201':
-          description: Tercer vehículo creado correctamente
     get:
       tags:
         - third_vehicles
@@ -829,7 +778,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/VehicleThird'
+                  $ref: '#/components/schemas/ThirdPartyVehicle'
 
   /third_vehicles/{id}:
     get:
@@ -852,7 +801,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VehicleThird'
+                $ref: '#/components/schemas/ThirdPartyVehicle'
         '404':
           description: Tercer vehículo no encontrado
           content:
@@ -879,7 +828,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/VehicleThird'
+              $ref: '#/components/schemas/ThirdPartyVehicle'
       responses:
         '200':
           description: Tercer vehículo actualizado correctamente
@@ -932,7 +881,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VehicleThird'
+                $ref: '#/components/schemas/ThirdPartyVehicle'
         '404':
           description: Tercer vehículo no encontrado
           content:
@@ -1021,10 +970,9 @@ components:
           type: integer
         policyId:
           type: integer
-        thirdPartyId:
-          type: integer
-        thirdPartyVehicleId:
-          type: integer
+        thirdPartyInfo:
+          type: object
+          $ref: '#/components/schemas/ThirdPartyInfo'
         placeEvent:
           type: string
         description:
@@ -1046,6 +994,95 @@ components:
         - accidentDate
         - dateOfRegistration
         - stateId
+
+    ThirdPartyInfo:
+      type: object
+      properties:
+        thirdPartyUser:
+          type: array
+          items:
+            $ref: '#/components/schemas/ThirdPartyUser'
+        thirdPartyVehicle:
+          type: array
+          items:
+            $ref: '#/components/schemas/ThirdPartyVehicle'
+
+    ThirdPartyUser:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        surname:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        dni:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        address:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        dateOfRegistration:
+          type: string
+          format: date
+        dateOfLastUpdate:
+          type: string
+          format: date
+        vehicles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ThirdPartyVehicle'
+
+    ThirdPartyVehicle:
+      properties:
+        id:
+          type: integer
+          example: 10
+        userThirdId:
+          type: integer
+        matricula:
+          type: string
+          example: "1234ABC"
+        km:
+          type: integer
+          example: 50000
+        marca:
+          type: string
+          example: "Toyota"
+        aseguradora:
+          type: string
+          example: "Mapfre"
+        color:
+          type: string
+          example: "Rojo"
+        fechaFabricacion:
+          type: string
+          format: date
+          example: "2020-01-01"
+        dateOfRegistration:
+          type: string
+          format: date
+          example: "2023-05-15"
+        dateOfLastUpdate:
+          type: string
+          format: date
+          example: "2024-02-20"
+      required:
+        - idUser
+        - matricula
+        - km
+        - marca
+        - fechaFabricacion
+
 
     User:
       type: object
@@ -1124,82 +1161,6 @@ components:
         - marca
         - fechaFabricacion
 
-    UserThird:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        surname:
-          type: string
-        phone:
-          type: string
-        email:
-          type: string
-        dni:
-          type: string
-        city:
-          type: string
-        country:
-          type: string
-        address:
-          type: string
-        dateOfBirth:
-          type: string
-          format: date
-        dateOfRegistration:
-          type: string
-          format: date
-        dateOfLastUpdate:
-          type: string
-          format: date
-        vehicles:
-          type: array
-          items:
-            $ref: '#/components/schemas/VehicleThird'
-
-    VehicleThird:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 10
-        userThirdId:
-          type: integer
-        matricula:
-          type: string
-          example: "1234ABC"
-        km:
-          type: integer
-          example: 50000
-        marca:
-          type: string
-          example: "Toyota"
-        aseguradora:
-          type: string
-          example: "Mapfre"
-        color:
-          type: string
-          example: "Rojo"
-        fechaFabricacion:
-          type: string
-          format: date
-          example: "2020-01-01"
-        dateOfRegistration:
-          type: string
-          format: date
-          example: "2023-05-15"
-        dateOfLastUpdate:
-          type: string
-          format: date
-          example: "2024-02-20"
-      required:
-        - idUser
-        - matricula
-        - km
-        - marca
-        - fechaFabricacion
 
     ErrorMessage:
       type: object
@@ -1213,3 +1174,4 @@ components:
           type: string
         description:
           type: string
+

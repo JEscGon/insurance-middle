@@ -1,6 +1,6 @@
 package com.dev.insurance_middle.application.service;
 
-import com.dev.insurance_middle.application.domain.VehicleThird;
+import com.dev.insurance_middle.application.domain.ThirdPartyVehicle;
 import com.dev.insurance_middle.application.repository.VehicleThirdRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,19 +16,19 @@ public class VehicleThirdService {
     public void deleteThirdVehicleById(Long id) {
         vehicleThirdRepository.deleteThirdVehicleById(id);
     }
-    public VehicleThird findByMatriculaThird(String matricula) {
+    public ThirdPartyVehicle findByMatriculaThird(String matricula) {
         return vehicleThirdRepository.findByMatriculaThird(matricula);
     }
-    public VehicleThird getThirdVehicleById(Long id) {
+    public ThirdPartyVehicle getThirdVehicleById(Long id) {
         return vehicleThirdRepository.getThirdVehicleById(id);
     }
-    public void saveThirdVehicle(VehicleThird vehicleThird) {
+    public void saveThirdVehicle(ThirdPartyVehicle vehicleThird) {
         vehicleThirdRepository.saveThirdVehicle(vehicleThird);
     }
-    public void updateThirdVehicle(Long id, VehicleThird vehicleThird) {
+    public void updateThirdVehicle(Long id, ThirdPartyVehicle vehicleThird) {
         vehicleThirdRepository.updateThirdVehicle(id, vehicleThird);
     }
-    public List<VehicleThird> getAllThirdVehicles() {
+    public List<ThirdPartyVehicle> getAllThirdVehicles() {
         return vehicleThirdRepository.getAllThirdVehicles();
     }
 

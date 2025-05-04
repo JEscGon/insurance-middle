@@ -1,8 +1,6 @@
 server:
   port: 8082
 
-
-
 rest:
   client:
     core:
@@ -15,4 +13,6 @@ rest:
       thirdVehicle:
         host: http://localhost:8080
       policies:
+        host: http://localhost:8081
+      parts:
         host: http://localhost:8081

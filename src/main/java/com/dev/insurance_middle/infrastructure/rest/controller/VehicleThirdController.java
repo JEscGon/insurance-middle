@@ -1,7 +1,7 @@
 package com.dev.insurance_middle.infrastructure.rest.controller;
 
 import com.dev.generated.middle.controller.ThirdVehiclesApi;
-import com.dev.generated.middle.dto.VehicleThirdControllerDto;
+import com.dev.generated.middle.dto.ThirdPartyVehicleControllerDto;
 import com.dev.insurance_middle.application.service.VehicleThirdService;
 import com.dev.insurance_middle.infrastructure.rest.mapper.VehicleThirdDtoControllerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,32 +24,31 @@ public class VehicleThirdController implements ThirdVehiclesApi {
         return ResponseEntity.noContent().build();
     }
 
-    @Override
-    public ResponseEntity<Void> saveThirdVehicle(VehicleThirdControllerDto vehicleThirdDto) {
-        vehicleThirdService.saveThirdVehicle(vehicleThirdDtoControllerMapper.fromDtoToDomain(vehicleThirdDto));
+
+    public ResponseEntity<Void> saveThirdVehicle(ThirdPartyVehicleControllerDto vehicleThirdDto) {
+        vehicleThirdService.saveThirdVehicle(vehicleThirdDtoControllerMapper.fromDtoToDomain(vehicleThirdDto));;
         return ResponseEntity.ok().build();
     }
 
     @Override
-    public ResponseEntity<Void> updateThirdVehicle(Long id, VehicleThirdControllerDto vehicleThirdDto) {
+    public ResponseEntity<Void> updateThirdVehicle(Long id, ThirdPartyVehicleControllerDto vehicleThirdDto) {
         vehicleThirdService.updateThirdVehicle(id, vehicleThirdDtoControllerMapper.fromDtoToDomain(vehicleThirdDto));
         return ResponseEntity.ok().build();
     }
     @Override
-    public ResponseEntity<VehicleThirdControllerDto> getThirdVehicleById(Long id) {
+    public ResponseEntity<ThirdPartyVehicleControllerDto> getThirdVehicleById(Long id) {
         return ResponseEntity.ok(vehicleThirdDtoControllerMapper.fromDomainToDto(vehicleThirdService.getThirdVehicleById(id)));
     }
     @Override
-    public ResponseEntity<VehicleThirdControllerDto> findByMatriculaThird(String matricula) {
+    public ResponseEntity<ThirdPartyVehicleControllerDto> findByMatriculaThird(String matricula) {
         return ResponseEntity.ok(vehicleThirdDtoControllerMapper.fromDomainToDto(vehicleThirdService.findByMatriculaThird(matricula)));
     }
     @Override
-    public ResponseEntity<List<VehicleThirdControllerDto>> getAllThirdVehicles() {
+    public ResponseEntity<List<ThirdPartyVehicleControllerDto>> getAllThirdVehicles() {
         return ResponseEntity.ok(vehicleThirdService.getAllThirdVehicles().stream()
                 .map(vehicleThirdDtoControllerMapper::fromDomainToDto)
                 .toList());
     }
-
 
 
 }
