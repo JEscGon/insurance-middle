@@ -10,8 +10,6 @@ public interface PartRepository {
 
     Part getPartById(Long id);
 
-    void updatePart(Part part);
-
     void deletePart(Long id);
 
     List<Part> getAllParts();

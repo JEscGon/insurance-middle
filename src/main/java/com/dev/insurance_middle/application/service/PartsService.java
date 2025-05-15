@@ -19,24 +19,28 @@ public class PartsService {
     private final VehicleThirdRepository vehicleThirdRepository;
     private final PartRepository partRepository;
 
-    //TODO: fix this
+    //TODO: fix this ¿?
     public void uploadPart(Part part) {
         saveThirdUserInfo(part.getThirdPartyId().stream().map(Long::intValue).toList());
     saveThirdVehiclesInfo(part.getThirdPartyVehicleId().stream().map(Long::intValue).toList());
         try {
             savePart(part);
        } catch (PartNosSavedException exception) {
-            rollbackSaveThirdPartyInfo(
-                part.getThirdPartyId().stream().map(Long::intValue).toList(),
-                part.getThirdPartyVehicleId().stream().map(Long::intValue).toList()
-            );
+//            rollbackSaveThirdPartyInfo(
+//                part.getThirdPartyId().stream().map(Long::intValue).toList(),
+//                part.getThirdPartyVehicleId().stream().map(Long::intValue).toList()
+//            );
            throw exception;
         }
     }
-    //TODO: ¿?¿implement this?¿?
-    private void rollbackSaveThirdPartyInfo(List<Integer> thirdPartyUsers, List<Integer> thirdPartyVehicles) {
 
-    }
+
+//    //TODO: ¿?¿implement this?¿?
+//    private void rollbackSaveThirdPartyInfo(List<Integer> thirdPartyUsers, List<Integer> thirdPartyVehicles) {
+//
+//    }
+
+
 
     private List<Long> saveThirdUserInfo(List<Integer> thirdPartyUsers) {
         List<Long> savedUserIds = new ArrayList<>();

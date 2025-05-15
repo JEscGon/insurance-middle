@@ -1,6 +1,5 @@
 package com.dev.insurance_middle.infrastructure.config;
 
-
 import com.dev.generated.policies.ApiClient;
 import com.dev.generated.policies.client.PartsApi;
 import org.springframework.beans.factory.annotation.Qualifier;
