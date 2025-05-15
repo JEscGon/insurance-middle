@@ -26,18 +26,12 @@ public class PartRestClientImpl implements PartRepository {
 
     @Override
     public void savePart(Part part) {
-        PartClientDto partDto = partDtoClientMapper.fromDomainToDto(part);
-        partApi.savePart(partDto);
+        partApi.savePart(partDtoClientMapper.fromDomainToDto(part));
     }
 
     @Override
     public Part getPartById(Long id) {
         return partDtoClientMapper.fromDtoToDomain(partApi.getPartById(Math.toIntExact(id)));
-    }
-
-    @Override
-    public void updatePart(Part part) {
-
     }
 
     @Override

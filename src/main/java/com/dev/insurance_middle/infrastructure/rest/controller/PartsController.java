@@ -44,9 +44,13 @@ public class PartsController implements PartsApi {
 
     }
 
-    @Override //TODO : que devuelva parte
+    @Override
     public ResponseEntity<PartControllerDto> getPartById(Integer id) {
-        return null;
+        Part part = partsService.findById(Long.valueOf(id));
+        if (part == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(mapper.fromDomainToDtoController(part), HttpStatus.OK);
     }
 
     @Override
@@ -63,13 +67,11 @@ public class PartsController implements PartsApi {
     @Override
     public ResponseEntity<Void> savePart(PartControllerDto partControllerDto) {
         Part partDomain = mapper.fromDtoControllerToDomain(partControllerDto);
-
         partsService.uploadPart(partDomain);
-
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @Override
+    @Override //TODO :
     public ResponseEntity<Void> updatePart(Integer id, PartControllerDto partControllerDto) {
         return PartsApi.super.updatePart(id, partControllerDto);
     }
