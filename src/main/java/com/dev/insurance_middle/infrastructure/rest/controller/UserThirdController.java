@@ -35,7 +35,7 @@ public class UserThirdController implements ThirdUsersApi {
     @Override
     public ResponseEntity<Void> updateThirdUser(Long userId, ThirdPartyUserControllerDto userDto) {
         userThirdService.updateThirdUser(userId, userThirdDtoControllerMapper.fromDtoToDomain(userDto));
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
 }

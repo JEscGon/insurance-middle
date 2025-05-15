@@ -358,7 +358,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/Part'
 
-
 components:
   schemas:
     PolicyType:
@@ -441,9 +440,15 @@ components:
         policyId:
           type: integer
         thirdPartyId:
-          type: integer
+          type: array
+          items:
+            type: integer
+          description: Lista de IDs de terceros involucrados
         thirdPartyVehicleId:
-          type: integer
+          type: array
+          items:
+            type: integer
+          description: Lista de IDs de vehículos de terceros involucrados
         placeEvent:
           type: string
         description:
@@ -465,7 +470,83 @@ components:
         - accidentDate
         - dateOfRegistration
         - stateId
-        
+
+    ThirdPartyUser:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        surname:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        dni:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        address:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        dateOfRegistration:
+          type: string
+          format: date
+        dateOfLastUpdate:
+          type: string
+          format: date
+        vehicles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ThirdPartyVehicle'
+
+    ThirdPartyVehicle:
+      properties:
+        id:
+          type: integer
+          example: 10
+        userThirdId:
+          type: integer
+        matricula:
+          type: string
+          example: "1234ABC"
+        km:
+          type: integer
+          example: 50000
+        marca:
+          type: string
+          example: "Toyota"
+        aseguradora:
+          type: string
+          example: "Mapfre"
+        color:
+          type: string
+          example: "Rojo"
+        fechaFabricacion:
+          type: string
+          format: date
+          example: "2020-01-01"
+        dateOfRegistration:
+          type: string
+          format: date
+          example: "2023-05-15"
+        dateOfLastUpdate:
+          type: string
+          format: date
+          example: "2024-02-20"
+      required:
+        - idUser
+        - matricula
+        - km
+        - marca
+        - fechaFabricacion
+
     ErrorMessage:
       type: object
       properties:
@@ -478,4 +559,3 @@ components:
           type: string
         description:
           type: string
-        

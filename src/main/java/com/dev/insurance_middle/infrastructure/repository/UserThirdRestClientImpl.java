@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -35,11 +36,11 @@ public class UserThirdRestClientImpl implements UserThirdRepository {
     }
 
     @Override
-    public void saveThirdUser(List<ThirdPartyUser> userThird) {
+    public List<Integer> saveThirdUser(List<ThirdPartyUser> userThird) {
         var users = new ThirdPartyUserWrapperClientDto();
         users.setUsers(userThird.stream().map(userThirdDtoClientMapper::fromDomainToDto).toList());
 
-        thirdUsersApi.saveThirdUser(users);
+        return thirdUsersApi.saveThirdUser(users);
     }
 
     @Override

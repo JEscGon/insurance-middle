@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -39,19 +40,13 @@ public class VehicleThirdRestClientImpl implements VehicleThirdRepository {
     public ThirdPartyVehicle getThirdVehicleById(Long id) {
         return vehicleThirdDtoClientMapper.fromDtoToDomain(thirdVehiclesApi.getThirdVehicleById(id));
     }
-    @Override
-    public void saveThirdVehicle(List<ThirdPartyVehicle> vehicleThird) {
-        var vehicles = vehicleThird.stream().map(vehicleThirdDtoClientMapper::fromDomainToDto).toList();
-        var wrapper = new ThirdPartyVehiclesWrapperClientDto();
-        wrapper.setVehicles(vehicles);
-        thirdVehiclesApi.saveThirdVehicle(wrapper);
-    }
+
 
     @Override
-    public void saveThirdVehicle(ThirdPartyVehicle vehicleThird) {
-        var vehiculo = vehicleThirdDtoClientMapper.fromDomainToDto(vehicleThird);
-        var wrapper = new ThirdPartyVehiclesWrapperClientDto();
-        thirdVehiclesApi.saveThirdVehicle(wrapper);
+    public List<Integer> saveThirdVehicle(List<ThirdPartyVehicle> listVehicleThird) {
+        var vehicles = new ThirdPartyVehiclesWrapperClientDto();
+        vehicles.setVehicles(listVehicleThird.stream().map(vehicleThirdDtoClientMapper::fromDomainToDto).toList());
+        return thirdVehiclesApi.saveThirdVehicle(vehicles);
     }
 
     @Override

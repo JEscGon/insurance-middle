@@ -14,5 +14,5 @@ rest:
         host: http://localhost:8080
       policies:
         host: http://localhost:8081
-      parts:
+      part:
         host: http://localhost:8081

@@ -10,7 +10,7 @@ public interface UserThirdRepository {
     void deleteThirdUserById(Long userId);
     List<ThirdPartyUser> findAllThirdUsers();
     ThirdPartyUser findThirdUserById(Long id);
-    void saveThirdUser(List<ThirdPartyUser> userThird);
+    List<Integer> saveThirdUser(List<ThirdPartyUser> userThird);
     void updateThirdUser(Long id, ThirdPartyUser userThird);
 
 }

@@ -9,8 +9,7 @@ public interface VehicleThirdRepository {
     ThirdPartyVehicle findByMatriculaThird(String matricula);
     List<ThirdPartyVehicle> getAllThirdVehicles();
     ThirdPartyVehicle getThirdVehicleById(Long id);
-    void saveThirdVehicle(List<ThirdPartyVehicle> vehicleThird);
-    void saveThirdVehicle(ThirdPartyVehicle vehicleThird);
+    List<Integer> saveThirdVehicle(List<ThirdPartyVehicle> listVehicleThird);
     void updateThirdVehicle(Long id, ThirdPartyVehicle vehicleThird);
 
 }

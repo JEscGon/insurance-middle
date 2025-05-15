@@ -13,6 +13,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,7 +23,6 @@ public class PartsController implements PartsApi {
 
     private final PartDtoControllerMapper mapper;
 
-
     @Override
     public Optional<NativeWebRequest> getRequest() {
         return PartsApi.super.getRequest();
@@ -30,22 +30,34 @@ public class PartsController implements PartsApi {
 
     @Override
     public ResponseEntity<Void> deletePartById(Integer id) {
-        return PartsApi.super.deletePartById(id);
+        partsService.deletePartById(Long.valueOf(id));
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @Override
     public ResponseEntity<List<PartControllerDto>> getAllParts() {
-        return PartsApi.super.getAllParts();
+
+        List<PartControllerDto> partDtos = partsService.getAllParts().stream()
+                .map(mapper::fromDomainToDtoController)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(partDtos, HttpStatus.OK);
+
     }
 
-    @Override
+    @Override //TODO : que devuelva parte
     public ResponseEntity<PartControllerDto> getPartById(Integer id) {
-        return PartsApi.super.getPartById(id);
+        return null;
     }
 
     @Override
     public ResponseEntity<List<PartControllerDto>> getPartsByPolicyId(Integer policyId) {
-        return PartsApi.super.getPartsByPolicyId(policyId);
+        List<PartControllerDto> partDtos = partsService.getPartsByPolicyId(Long.valueOf(policyId)).stream()
+                .map(mapper::fromDomainToDtoController)
+                .collect(Collectors.toList());
+        if (partDtos.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(partDtos, HttpStatus.OK);
     }
 
     @Override

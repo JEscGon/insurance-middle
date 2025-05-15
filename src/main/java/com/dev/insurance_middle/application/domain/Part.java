@@ -2,7 +2,9 @@ package com.dev.insurance_middle.application.domain;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -11,22 +13,17 @@ import java.time.OffsetDateTime;
 @Setter
 public class Part {
 
-  private Integer id;
+    private Long id;
 
-  private Integer policyId;
+    private Long policyId;
+    private List<Long> thirdPartyId;
+    private List<Long> thirdPartyVehicleId;
+    private Long stateId;
 
-  private ThirdPartyInfo thirdPartyInfo;
+    private String placeEvent;
+    private String description;
 
-  private String placeEvent;
-
-  private String description;
-
-  private OffsetDateTime accidentDate;
-
-  private OffsetDateTime dateOfRegistration;
-
-  private OffsetDateTime dateOfLastUpdate;
-
-  private Integer stateId;
-
+    private LocalDateTime accidentDate;
+    private LocalDateTime dateOfRegistration;
+    private LocalDateTime dateOfLastUpdate;
 }

@@ -4,7 +4,6 @@ import com.dev.insurance_middle.application.domain.User;
 import java.util.List;
 
 public interface UserRepository {
-
     User findById(Long userId);
     void deleteUserById(Long id);
     List<User> findAllUsers();

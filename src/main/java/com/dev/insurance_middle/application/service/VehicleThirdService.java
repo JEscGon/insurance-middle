@@ -1,10 +1,12 @@
 package com.dev.insurance_middle.application.service;
 
+import com.dev.generated.middle.dto.ThirdPartyVehiclesWrapperControllerDto;
 import com.dev.insurance_middle.application.domain.ThirdPartyVehicle;
 import com.dev.insurance_middle.application.repository.VehicleThirdRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -22,8 +24,8 @@ public class VehicleThirdService {
     public ThirdPartyVehicle getThirdVehicleById(Long id) {
         return vehicleThirdRepository.getThirdVehicleById(id);
     }
-    public void saveThirdVehicle(ThirdPartyVehicle vehicleThird) {
-        vehicleThirdRepository.saveThirdVehicle(vehicleThird);
+    public List<Integer> saveThirdVehicle(List<ThirdPartyVehicle> vehiclesThird) {
+        return vehicleThirdRepository.saveThirdVehicle(vehiclesThird);
     }
     public void updateThirdVehicle(Long id, ThirdPartyVehicle vehicleThird) {
         vehicleThirdRepository.updateThirdVehicle(id, vehicleThird);

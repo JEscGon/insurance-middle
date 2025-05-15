@@ -1,8 +1,6 @@
 package com.dev.insurance_middle.application.service;
 
-import com.dev.generated.users.dto.ThirdPartyUserWrapperClientDto;
 import com.dev.insurance_middle.application.domain.ThirdPartyUser;
-import com.dev.insurance_middle.application.domain.UserThird;
 import com.dev.insurance_middle.application.repository.UserThirdRepository;
 import com.dev.insurance_middle.infrastructure.repository.mapper.UserThirdDtoClientMapper;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +28,8 @@ public class UserThirdService {
         return userThirdRepository.findThirdUserById(id);
     }
 
-    public void saveThirdUser(List<ThirdPartyUser> usersThird) {
-        userThirdRepository.saveThirdUser(usersThird);
+    public List<Integer> saveThirdUser(List<ThirdPartyUser> usersThird) {
+       return userThirdRepository.saveThirdUser(usersThird);
     }
     public void updateThirdUser(Long id, ThirdPartyUser userThird) {
         userThirdRepository.updateThirdUser(id, userThird);

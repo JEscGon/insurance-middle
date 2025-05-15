@@ -16,346 +16,6 @@ tags:
     description: Operations about states
 
 paths:
-  /policyTypes:
-    get:
-      tags:
-        - policyMiddle
-      summary: Obtener todos los tipos de pólizas
-      operationId: getAllPolicyTypes
-      responses:
-        '200':
-          description: Lista de tipos de pólizas
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PolicyType'
-
-  /policyTypes/{id}:
-    get:
-      tags:
-        - policyMiddle
-      summary: Obtener un tipo de póliza por ID
-      operationId: getPolicyTypeById
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Tipo de póliza encontrado
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PolicyType'
-        '404':
-          description: Tipo de póliza no encontrado
-  /states:
-    get:
-      tags:
-        - states
-      summary: Obtener todos los estados
-      operationId: getAllStates
-      responses:
-        '200':
-          description: Lista de estados
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/State'
-  /states/{id}:
-    get:
-      tags:
-        - states
-      summary: Obtener un estado por ID
-      operationId: getStateById
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Estado encontrado
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/State'
-        '404':
-          description: Estado no encontrado
-  /policies:
-    post:
-      tags:
-        - policyMiddle
-      summary: Creación de una póliza
-      description: Crea una nueva póliza en el sistema
-      operationId: savePolicy
-      requestBody:
-        required: true
-        description: Póliza a crear
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Policy'
-      responses:
-        '201':
-          description: Póliza creada correctamente
-    get:
-      tags:
-        - policyMiddle
-      summary: Obtener todas las pólizas
-      operationId: getAllPolicies
-      responses:
-        '200':
-          description: Lista de pólizas
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Policy'
-
-  /policies/{id}:
-    get:
-      tags:
-        - policyMiddle
-      summary: Obtener detalles de una póliza
-      operationId: getPolicyById
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Detalles de la póliza
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Policy'
-        '404':
-          description: Póliza no encontrada
-    put:
-      tags:
-        - policyMiddle
-      summary: Actualizar una póliza existente
-      operationId: updatePolicy
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        description: Datos actualizados de la póliza
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Policy'
-      responses:
-        '200':
-          description: Póliza actualizada correctamente
-        '404':
-          description: Póliza no encontrada
-    delete:
-      tags:
-        - policyMiddle
-      summary: Eliminar una póliza
-      operationId: deletePolicyById
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-      responses:
-        '204':
-          description: Póliza eliminada correctamente
-
-  /policies/dni/{dni}:
-    get:
-      tags:
-        - policyMiddle
-      summary: Obtener póliza por DNI de usuario
-      operationId: getPolicyByDni
-      parameters:
-        - in: path
-          name: dni
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Póliza del usuario
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Policy'
-
-  /policies/vehicle/{matricula}:
-    get:
-      tags:
-        - policyMiddle
-      summary: Obtener póliza por matrícula del vehículo
-      operationId: getPolicyByMatricula
-      parameters:
-        - in: path
-          name: matricula
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: póliza del vehículo
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Policy'
-
-  /policies/user/{userId}:
-    get:
-      tags:
-        - policyMiddle
-      summary: Obtener póliza por ID de usuario
-      operationId: getPolicyByUserId
-      parameters:
-        - in: path
-          name: userId
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Póliza del usuario
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Policy'
-        '404':
-          description: Póliza no encontrada
-
-
-  /parts:
-    post:
-      tags:
-        - parts
-      summary: Crear un parte de siniestro
-      operationId: savePart
-      requestBody:
-        required: true
-        description: Parte a crear
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Part'
-      responses:
-        '201':
-          description: Parte creado correctamente
-    get:
-      tags:
-        - parts
-      summary: Obtener todos los partes
-      operationId: getAllParts
-      responses:
-        '200':
-          description: Lista de partes
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Part'
-  /parts/{id}:
-    get:
-      tags:
-        - parts
-      summary: Obtener un parte por ID
-      operationId: getPartById
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Parte encontrado
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Part'
-        '404':
-          description: Parte no encontrado
-    put:
-      tags:
-        - parts
-      summary: Actualizar un parte de siniestro existente
-      operationId: updatePart
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        description: Datos actualizados del parte
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Part'
-      responses:
-        '200':
-          description: Parte actualizado correctamente
-        '404':
-          description: Parte no encontrado
-    delete:
-      tags:
-        - parts
-      summary: Eliminar un parte de siniestro
-      operationId: deletePartById
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      responses:
-        '204':
-          description: Parte eliminado correctamente
-        '404':
-          description: Parte no encontrado
-
-  /parts/policy/{policyId}:
-    get:
-      tags:
-        - parts
-      summary: Obtener partes por ID de póliza
-      operationId: getPartsByPolicyId
-      parameters:
-        - in: path
-          name: policyId
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Lista de partes asociados a la póliza
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Part'
-
   /users:
     post:
       tags:
@@ -677,6 +337,42 @@ paths:
                 items:
                   $ref: '#/components/schemas/Vehicle'
 
+  /third_users:
+    post:
+      tags:
+        - third_users
+      summary: Creación de un tercer usuario
+      description: Creación de un tercer usuario en la base de datos
+      operationId: saveThirdUser
+      requestBody:
+        required: true
+        description: Tercer usuario a crear
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ThirdPartyUserWrapper'
+      responses:
+        '201':
+          description: Tercer usuario creado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: integer
+
+    get:
+      tags:
+        - third_users
+      summary: Obtener todos los terceros usuarios
+      operationId: findAllThirdUsers
+      responses:
+        '200':
+          description: Lista de terceros usuarios
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThirdPartyUserWrapper'
 
   /third_users/{id}:
     get:
@@ -764,6 +460,28 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
 
   /third_vehicles:
+    post:
+      tags:
+        - third_vehicles
+      summary: Añade un nuevo tercer vehículo
+      description: Registra un nuevo tercer vehículo en el sistema
+      operationId: saveThirdVehicle
+      requestBody:
+        required: true
+        description: Tercer vehículo a añadir
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ThirdPartyVehiclesWrapper'
+      responses:
+        '201':
+          description: Tercer vehículo creado correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: integer
     get:
       tags:
         - third_vehicles
@@ -776,9 +494,8 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ThirdPartyVehicle'
+                type: object
+                $ref: '#/components/schemas/ThirdPartyVehiclesWrapper'
 
   /third_vehicles/{id}:
     get:
@@ -888,6 +605,345 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
+  /policyTypes:
+    get:
+      tags:
+        - policyTypes
+      summary: Obtener todos los tipos de pólizas
+      operationId: getAllPolicyTypes
+      responses:
+        '200':
+          description: Lista de tipos de pólizas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PolicyType'
+
+  /policyTypes/{id}:
+    get:
+      tags:
+        - policyTypes
+      summary: Obtener un tipo de póliza por ID
+      operationId: getPolicyTypeById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Tipo de póliza encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyType'
+        '404':
+          description: Tipo de póliza no encontrado
+  /states:
+    get:
+      tags:
+        - states
+      summary: Obtener todos los estados
+      operationId: getAllStates
+      responses:
+        '200':
+          description: Lista de estados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/State'
+  /states/{id}:
+    get:
+      tags:
+        - states
+      summary: Obtener un estado por ID
+      operationId: getStateById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Estado encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/State'
+        '404':
+          description: Estado no encontrado
+  /policies:
+    post:
+      tags:
+        - policies
+      summary: Creación de una póliza
+      description: Crea una nueva póliza en el sistema
+      operationId: savePolicy
+      requestBody:
+        required: true
+        description: Póliza a crear
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy'
+      responses:
+        '201':
+          description: Póliza creada correctamente
+    get:
+      tags:
+        - policies
+      summary: Obtener todas las pólizas
+      operationId: getAllPolicies
+      responses:
+        '200':
+          description: Lista de pólizas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Policy'
+
+  /policies/{id}:
+    get:
+      tags:
+        - policies
+      summary: Obtener detalles de una póliza
+      operationId: getPolicyById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalles de la póliza
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+        '404':
+          description: Póliza no encontrada
+    put:
+      tags:
+        - policies
+      summary: Actualizar una póliza existente
+      operationId: updatePolicy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Datos actualizados de la póliza
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy'
+      responses:
+        '200':
+          description: Póliza actualizada correctamente
+        '404':
+          description: Póliza no encontrada
+    delete:
+      tags:
+        - policies
+      summary: Eliminar una póliza
+      operationId: deletePolicyById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Póliza eliminada correctamente
+
+  /policies/dni/{dni}:
+    get:
+      tags:
+        - policies
+      summary: Obtener póliza por DNI de usuario
+      operationId: getPolicyByDni
+      parameters:
+        - in: path
+          name: dni
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Póliza del usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+
+  /policies/vehicle/{matricula}:
+    get:
+      tags:
+        - policies
+      summary: Obtener póliza por matrícula del vehículo
+      operationId: getPolicyByMatricula
+      parameters:
+        - in: path
+          name: matricula
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: póliza del vehículo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+
+  /policies/user/{userId}:
+    get:
+      tags:
+        - policies
+      summary: Obtener póliza por ID de usuario
+      operationId: getPolicyByUserId
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Póliza del usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+        '404':
+          description: Póliza no encontrada
+
+
+  /parts:
+    post:
+      tags:
+        - parts
+      summary: Crear un parte de siniestro
+      operationId: savePart
+      requestBody:
+        required: true
+        description: Parte a crear
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Part'
+      responses:
+        '201':
+          description: Parte creado correctamente
+    get:
+      tags:
+        - parts
+      summary: Obtener todos los partes
+      operationId: getAllParts
+      responses:
+        '200':
+          description: Lista de partes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Part'
+  /parts/{id}:
+    get:
+      tags:
+        - parts
+      summary: Obtener un parte por ID
+      operationId: getPartById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Parte encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Part'
+        '404':
+          description: Parte no encontrado
+    put:
+      tags:
+        - parts
+      summary: Actualizar un parte de siniestro existente
+      operationId: updatePart
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        description: Datos actualizados del parte
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Part'
+      responses:
+        '200':
+          description: Parte actualizado correctamente
+        '404':
+          description: Parte no encontrado
+    delete:
+      tags:
+        - parts
+      summary: Eliminar un parte de siniestro
+      operationId: deletePartById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Parte eliminado correctamente
+        '404':
+          description: Parte no encontrado
+
+  /parts/policy/{policyId}:
+    get:
+      tags:
+        - parts
+      summary: Obtener partes por ID de póliza
+      operationId: getPartsByPolicyId
+      parameters:
+        - in: path
+          name: policyId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lista de partes asociados a la póliza
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Part'
 
 components:
   schemas:
@@ -970,9 +1026,16 @@ components:
           type: integer
         policyId:
           type: integer
-        thirdPartyInfo:
-          type: object
-          $ref: '#/components/schemas/ThirdPartyInfo'
+        thirdPartyId:
+          type: array
+          items:
+            type: integer
+          description: Lista de IDs de terceros involucrados
+        thirdPartyVehicleId:
+          type: array
+          items:
+            type: integer
+          description: Lista de IDs de vehículos de terceros involucrados
         placeEvent:
           type: string
         description:
@@ -995,14 +1058,55 @@ components:
         - dateOfRegistration
         - stateId
 
-    ThirdPartyInfo:
+    User:
       type: object
       properties:
-        thirdPartyUser:
+        id:
+          type: integer
+        name:
+          type: string
+        surname:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        dni:
+          type: string
+        password:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        address:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        dateOfRegistration:
+          type: string
+          format: date
+        dateOfLastUpdate:
+          type: string
+          format: date
+        vehicles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vehicle'
+
+    ThirdPartyUserWrapper:
+      type: object
+      properties:
+        users:
           type: array
           items:
             $ref: '#/components/schemas/ThirdPartyUser'
-        thirdPartyVehicle:
+
+    ThirdPartyVehiclesWrapper:
+      type: object
+      properties:
+        vehicles:
           type: array
           items:
             $ref: '#/components/schemas/ThirdPartyVehicle'
@@ -1083,44 +1187,6 @@ components:
         - marca
         - fechaFabricacion
 
-
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        surname:
-          type: string
-        phone:
-          type: string
-        email:
-          type: string
-        dni:
-          type: string
-        password:
-          type: string
-        city:
-          type: string
-        country:
-          type: string
-        address:
-          type: string
-        dateOfBirth:
-          type: string
-          format: date
-        dateOfRegistration:
-          type: string
-          format: date
-        dateOfLastUpdate:
-          type: string
-          format: date
-        vehicles:
-          type: array
-          items:
-            $ref: '#/components/schemas/Vehicle'
-
     Vehicle:
       type: object
       properties:
@@ -1160,7 +1226,6 @@ components:
         - km
         - marca
         - fechaFabricacion
-
 
     ErrorMessage:
       type: object
