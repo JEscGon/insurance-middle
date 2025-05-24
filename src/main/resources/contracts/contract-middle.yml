@@ -5,15 +5,6 @@ info:
   version: 1.0.0
 servers:
   - url: https://localhost:8082
-tags:
-  - name: userMiddle
-    description: Operations about user
-  - name: partMiddle
-    description: Operations about part
-  - name: policyMiddle
-    description: Operations about policy
-  - name: states
-    description: Operations about states
 
 paths:
   /users:
@@ -1026,16 +1017,11 @@ components:
           type: integer
         policyId:
           type: integer
-        thirdPartyId:
+        thirdPartyUsers:
           type: array
           items:
-            type: integer
+            $ref: '#/components/schemas/ThirdPartyUser'
           description: Lista de IDs de terceros involucrados
-        thirdPartyVehicleId:
-          type: array
-          items:
-            type: integer
-          description: Lista de IDs de vehículos de terceros involucrados
         placeEvent:
           type: string
         description:
@@ -1141,10 +1127,9 @@ components:
         dateOfLastUpdate:
           type: string
           format: date
-        vehicles:
-          type: array
-          items:
-            $ref: '#/components/schemas/ThirdPartyVehicle'
+        vehicle:
+          type: object
+          $ref: '#/components/schemas/ThirdPartyVehicle'
 
     ThirdPartyVehicle:
       properties:
@@ -1186,6 +1171,32 @@ components:
         - km
         - marca
         - fechaFabricacion
+
+    PartThirdParty:
+      type: object
+      properties:
+        id:
+          type: integer
+        partId:
+          type: integer
+        thirdPartyId:
+          type: integer
+      required:
+        - partId
+        - thirdPartyId
+
+    PartThirdPartyVehicle:
+      type: object
+      properties:
+        id:
+          type: integer
+        partId:
+          type: integer
+        thirdPartyVehicleId:
+          type: integer
+      required:
+        - partId
+        - thirdPartyVehicleId
 
     Vehicle:
       type: object

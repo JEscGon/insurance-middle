@@ -16,8 +16,7 @@ public class Part {
     private Long id;
 
     private Long policyId;
-    private List<Long> thirdPartyId;
-    private List<Long> thirdPartyVehicleId;
+    private List<ThirdPartyUser> thirdPartyUsers;
     private Long stateId;
 
     private String placeEvent;

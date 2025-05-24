@@ -39,6 +39,8 @@ public class ThirdPartyUser {
 
   private LocalDate dateOfBirth;
 
+  private ThirdPartyVehicle vehicle;
+
   private LocalDate dateOfRegistration;
 
   private LocalDate dateOfLastUpdate;
