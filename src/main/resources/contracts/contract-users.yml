@@ -733,10 +733,9 @@ components:
         dateOfLastUpdate:
           type: string
           format: date
-        vehicles:
-          type: array
-          items:
-            $ref: '#/components/schemas/ThirdPartyVehicle'
+        vehicle:
+          type: object
+          $ref: '#/components/schemas/ThirdPartyVehicle'
 
     ThirdPartyVehicle:
       properties:
@@ -773,7 +772,7 @@ components:
           format: date
           example: "2024-02-20"
       required:
-        - idUser
+        - userThirdId
         - matricula
         - km
         - marca

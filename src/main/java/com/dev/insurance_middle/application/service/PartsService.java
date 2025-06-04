@@ -1,12 +1,14 @@
 package com.dev.insurance_middle.application.service;
 
 import com.dev.insurance_middle.application.domain.*;
+import com.dev.insurance_middle.application.exception.PartNosSavedException;
 import com.dev.insurance_middle.application.repository.PartRepository;
 import com.dev.insurance_middle.application.repository.UserThirdRepository;
 import com.dev.insurance_middle.application.repository.VehicleThirdRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,15 +20,25 @@ public class PartsService {
     private final PartRepository partRepository;
 
     public void uploadPart(Part part) {
-
-        //SALVAR USUARIOS DE TERCEROS (IMPLICARÁ MODIFICAR USERS PARA QUE RECIBA EL JSON NUEVO
-
-        //RECOGER LOS IDS DE LOS USUARIOS QUE DEVUELVE LA LLAMADA A USERS Y METERSO AL PARTE Y LLAMAR A PARTES
-
-        //CONTROLAR MEDIANTE EXCEPCIONES Y SI FALLA LA LLAMADA A PARTES, LLAMAR AL ROLLBACK (AHORA SOLO HABRÄ QUE ENVIAR LOS IDS DE USUARIO PARA BORRARLO EN USERS)
-        // (AQUI PUEDES MIRAR LA EXCEPCION QUE SE CONTROLABA EN EL CODIGO VIEJO)
-
+        List<ThirdPartyUser> thirdPartyUsers = part.getThirdPartyUsers();
+        List<Integer> savedUsers = new ArrayList<>();
+        try {
+           savedUsers = userThirdRepository.saveThirdUser(thirdPartyUsers);
+            part.setThirdPartyUsers(savedUsers.stream()
+                    .map(id -> ThirdPartyUser.builder().id(id).build())
+                    .toList());
+            savePart(part);
+        } catch (PartNosSavedException e) {  // Rollback en caso de error
+            rollbackThirdPartyUsers(savedUsers);
+            throw new PartNosSavedException();
+        }
     }
+
+    private void rollbackThirdPartyUsers(List<Integer> thirdPartyUsers) {
+        thirdPartyUsers.forEach(id -> userThirdRepository.deleteThirdUserById(id.longValue()));
+    }
+
+
 
     private void savePart(Part part) {
         partRepository.savePart(part);

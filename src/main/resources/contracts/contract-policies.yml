@@ -439,16 +439,10 @@ components:
           type: integer
         policyId:
           type: integer
-        thirdPartyIds:
+        thirdPartyUsers:
           type: array
           items:
-            type: integer
-          description: Lista de IDs de terceros involucrados
-        thirdPartyVehicleIds:
-          type: array
-          items:
-            type: integer
-          description: Lista de IDs de vehículos de terceros involucrados
+            $ref: '#/components/schemas/ThirdPartyUser'
         placeEvent:
           type: string
         description:
@@ -502,10 +496,9 @@ components:
         dateOfLastUpdate:
           type: string
           format: date
-        vehicles:
-          type: array
-          items:
-            $ref: '#/components/schemas/ThirdPartyVehicle'
+        vehicle:
+          type: object
+          $ref: '#/components/schemas/ThirdPartyVehicle'
 
     ThirdPartyVehicle:
       properties:
@@ -542,7 +535,7 @@ components:
           format: date
           example: "2024-02-20"
       required:
-        - idUser
+        - userThirdId
         - matricula
         - km
         - marca
@@ -560,19 +553,6 @@ components:
       required:
         - partId
         - thirdPartyId
-
-    PartThirdPartyVehicle:
-      type: object
-      properties:
-        id:
-          type: integer
-        partId:
-          type: integer
-        thirdPartyVehicleId:
-          type: integer
-      required:
-        - partId
-        - thirdPartyVehicleId
 
     ErrorMessage:
       type: object
