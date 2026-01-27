@@ -19,7 +19,20 @@
 		<java.version>17</java.version>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
+		<spring-cloud.version>2024.0.1</spring-cloud.version>
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
@@ -64,6 +77,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
@@ -105,7 +119,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
 		</dependency>
-
+<!-- Spring Cloud Config Client -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -156,8 +174,7 @@
 				<artifactId>openapi-generator-maven-plugin</artifactId>
 				<version>6.0.1</version>
 				<executions>
-
-					<!--TODO -->
+					<!-- TODO: repasar esta parte y entender bien -->
 					<execution>
 						<id>generate-middle-server-facade</id>
 						<goals>
@@ -182,7 +199,7 @@
 						</configuration>
 					</execution>
 
-					<!--TODO -->
+					<!-- TODO: repasar esta parte y entender bien -->
 					<execution>
 						<id>generate-policies-core-rest-client</id>
 						<goals>
@@ -211,7 +228,7 @@
 						</configuration>
 					</execution>
 
-					<!--TODO -->
+					<!-- TODO: repasar esta parte y entender bien -->
 					<execution>
 						<id>generate-users-core-rest-client</id>
 						<goals>
