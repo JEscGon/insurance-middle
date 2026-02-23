@@ -5,6 +5,14 @@ spring:
     active: local
   config:
     import: "optional:configserver:http://insurance-configserver:8888"
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://insurance-eureka:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
 management:
   endpoints:
     web:
