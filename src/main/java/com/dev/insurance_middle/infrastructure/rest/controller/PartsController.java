@@ -9,10 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.NativeWebRequest;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,30 +20,29 @@ public class PartsController implements PartsApi {
 
     private final PartDtoControllerMapper mapper;
 
-
-    @Override
-    public Optional<NativeWebRequest> getRequest() {
-        return PartsApi.super.getRequest();
-    }
-
     @Override
     public ResponseEntity<Void> deletePartById(Integer id) {
-        return PartsApi.super.deletePartById(id);
+        partsService.deletePart(id);
+        return ResponseEntity.noContent().build();
     }
 
     @Override
     public ResponseEntity<List<PartControllerDto>> getAllParts() {
-        return PartsApi.super.getAllParts();
+        return ResponseEntity.ok(partsService.getAllParts().stream()
+                .map(mapper::fromDomainToDtoController)
+                .toList());
     }
 
     @Override
     public ResponseEntity<PartControllerDto> getPartById(Integer id) {
-        return PartsApi.super.getPartById(id);
+        return ResponseEntity.ok(mapper.fromDomainToDtoController(partsService.getPartById(id)));
     }
 
     @Override
     public ResponseEntity<List<PartControllerDto>> getPartsByPolicyId(Integer policyId) {
-        return PartsApi.super.getPartsByPolicyId(policyId);
+        return ResponseEntity.ok(partsService.getPartsByPolicyId(policyId).stream()
+                .map(mapper::fromDomainToDtoController)
+                .toList());
     }
 
     @Override
@@ -59,6 +56,7 @@ public class PartsController implements PartsApi {
 
     @Override
     public ResponseEntity<Void> updatePart(Integer id, PartControllerDto partControllerDto) {
-        return PartsApi.super.updatePart(id, partControllerDto);
+        partsService.updatePart(id, mapper.fromDtoControllerToDomain(partControllerDto));
+        return ResponseEntity.ok().build();
     }
 }

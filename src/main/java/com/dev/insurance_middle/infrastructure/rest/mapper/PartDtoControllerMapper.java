@@ -9,4 +9,6 @@ public interface PartDtoControllerMapper {
 
     Part fromDtoControllerToDomain(PartControllerDto dto);
 
+    PartControllerDto fromDomainToDtoController(Part part);
+
 }
