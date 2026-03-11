@@ -51,6 +51,7 @@ public class VehicleThirdRestClientImpl implements VehicleThirdRepository {
     public void saveThirdVehicle(ThirdPartyVehicle vehicleThird) {
         var vehiculo = vehicleThirdDtoClientMapper.fromDomainToDto(vehicleThird);
         var wrapper = new ThirdPartyVehiclesWrapperClientDto();
+        wrapper.setVehicles(List.of(vehiculo));
         thirdVehiclesApi.saveThirdVehicle(wrapper);
     }
 
