@@ -440,10 +440,16 @@ components:
           type: integer
         policyId:
           type: integer
-        thirdPartyId:
-          type: integer
-        thirdPartyVehicleId:
-          type: integer
+        thirdPartyIds:
+          type: array
+          items:
+            type: integer
+          description: Lista de IDs de terceros involucrados
+        thirdPartyVehicleIds:
+          type: array
+          items:
+            type: integer
+          description: Lista de IDs de vehículos de terceros involucrados
         placeEvent:
           type: string
         description:
@@ -461,6 +467,7 @@ components:
           type: integer
       required:
         - policyId
+        - placeEvent
         - description
         - accidentDate
         - dateOfRegistration

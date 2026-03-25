@@ -14,6 +14,18 @@ tags:
     description: Operations about policy
   - name: states
     description: Operations about states
+  - name: policyStates
+    description: Operations about policy states
+  - name: users
+    description: Operations about users
+  - name: vehicles
+    description: Operations about vehicles
+  - name: third_users
+    description: Operations about third users
+  - name: third_vehicles
+    description: Operations about third vehicles
+  - name: parts
+    description: Operations about parts
 
 paths:
   /policyTypes:

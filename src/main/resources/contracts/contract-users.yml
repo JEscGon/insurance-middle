@@ -352,7 +352,6 @@ paths:
         content:
           application/json:
             schema:
-              type: object
               $ref: '#/components/schemas/ThirdPartyUserWrapper'
       responses:
         '201':
@@ -368,7 +367,6 @@ paths:
           content:
             application/json:
               schema:
-                type: object
                 $ref: '#/components/schemas/ThirdPartyUserWrapper'
 
   /third_users/{id}:
@@ -485,7 +483,6 @@ paths:
           content:
             application/json:
               schema:
-                type: object
                 $ref: '#/components/schemas/ThirdPartyVehiclesWrapper'
 
   /third_vehicles/{id}:
@@ -670,7 +667,7 @@ components:
           format: date
           example: "2024-02-20"
       required:
-        - idUser
+        - userId
         - matricula
         - km
         - marca
@@ -740,6 +737,7 @@ components:
             $ref: '#/components/schemas/ThirdPartyVehicle'
 
     ThirdPartyVehicle:
+      type: object
       properties:
         id:
           type: integer
@@ -774,7 +772,7 @@ components:
           format: date
           example: "2024-02-20"
       required:
-        - idUser
+        - userThirdId
         - matricula
         - km
         - marca
